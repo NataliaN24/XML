@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<root xmlns:bookA="book-namespace" xmlns:recordA="record-namespace">
+<bookA:book>
+<bookA:title>A true story></bookA:title>
+<bookA:description>A real cool publication</bookA:description>
+</bookA:book>
+
+<recordA:record>
+<recordA:name>Miller</recordA:name>
+<recordA:title>Dr. </recordA:title>
+<recordA:publications> ... </recordA:publications>
+</recordA:record>
+</root>
