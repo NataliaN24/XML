@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cinemaCityParadise>
+<GeneralInfo>
+<address>sofia</address>
+<phone>+354896163632</phone>
+<description>movies during week</description>
+</GeneralInfo>
+<ticketPrices>
+<Price>
+<Day>Monday</Day>
+<Amount>10.00 BG</Amount>
+</Price>
+<Price>
+      <Day>Tuesday</Day>
+      <Amount>8.00 BGN</Amount>
+    </Price>
+    <Price>
+      <Day>Wednesday</Day>
+      <Amount>8.00 BGN</Amount>
+    </Price>
+    <Price>
+      <Day>Thursday</Day>
+      <Amount>10.00 BGN</Amount>
+    </Price>
+    <Price>
+      <Day>Friday</Day>
+      <Amount>12.00 BGN</Amount>
+    </Price>
+    <Price>
+      <Day>Saturday</Day>
+      <Amount>12.00 BGN</Amount>
+    </Price>
+    <Price>
+      <Day>Sunday</Day>
+      <Amount>10.00 BGN</Amount>
+    </Price>
+  </ticketPrices>
+<Movies>
+<Movie>
+<Title>title1</Title>
+<Timetables>
+<Timetable>
+<Date>10.2.2024</Date>
+<Time>14:20</Time>
+</Timetable>
+<Timetable>
+<Date>10.2.2024</Date>
+<Time>14:20</Time>
+</Timetable>
+</Timetables>
+</Movie>
+<Movie>
+<Title>title1</Title>
+<Timetables>
+<Timetable>
+<Date>10.2.2024</Date>
+<Time>14:20</Time>
+</Timetable>
+<Timetable>
+<Date>10.2.2024</Date>
+<Time>14:20</Time>
+</Timetable>
+</Timetables>
+</Movie>
+</Movies>
+</cinemaCityParadise>
+
