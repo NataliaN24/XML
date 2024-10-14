@@ -1,8 +1,8 @@
 <logicalOperators>
-<operator>
-<condition>
-<![CDATA[ Equal to ]]>
-</condition>
+  <operator>
+      <condition>
+      <![CDATA[ Equal to ]]>//ne trqbva tuk da ima cdata
+      </condition>
 <symbol>
 <![CDATA[ = ]]>
 </symbol>
