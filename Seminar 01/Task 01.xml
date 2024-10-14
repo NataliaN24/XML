@@ -2,7 +2,7 @@
 <recipe>
 <name>Бисквитена торта</name>
 <author>Анонимен</author>
-<address> site=www.recipes.com </address>
+<address site="www.recipes.com"/>
 <ingredients>
   <list>
     <item>1 пакет бисквити</item>
