@@ -1,6 +1,17 @@
+----------------------------------- SOLUTION 1-----------------------------------------------------------------------------------------------------------
+<?xml version="1.0"?>
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <expressions>
 <expr1>&#8704; x &#8712; {y-10,y+10} &#8712; i</expr1>
 <expr2>Einführung </expr2>
 <expr3>&#915;&#949;&#953;&#945; &#915;&#953;&#940;&#957;&#957;&#951;</expr3>
 </expressions>
+----------------------------------- SOLUTION 2-----------------------------------------------------------------------------------------------------------
+<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<Expressions>
+<Expression id="1">∀ x ∈ {y-10, y+10} ∃ i</Expression>
+<Expression id="2">Einführung</Expression>
+<Expression id="3">Γεια Γιάννη</Expression>
+<Expression id="4">嗨你好</Expression>
+</Expressions>
