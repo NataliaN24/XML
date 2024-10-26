@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE shiporder SYSTEM "shiporder.dtd">
+<!DOCTYPE shiporder SYSTEM "1shiporder.dtd">
 <shiporder orderid="889923">
    <orderperson>John Smith</orderperson>
    <shipto>
