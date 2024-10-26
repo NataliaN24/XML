@@ -1,3 +1,5 @@
+----------------------------------- SOLUTION 1-----------------------------------------------------------------------------------------------------------
+<?xml version="1.0"?>
 <?xml version="1.0"?> //greshka
 <root xmlns:bookA="book-namespace" xmlns:recordA="record-namespace">
 <bookA:book>
@@ -11,3 +13,18 @@
 <recordA:publications> ... </recordA:publications>
 </recordA:record>
 </root>
+
+----------------------------------- SOLUTION 2-----------------------------------------------------------------------------------------------------------
+<?xml version="1.0"?>
+<?xml version="1.0"?>
+<employees:record xmlns:employees="http://employees.org/"
+xmlns:biblio="http://biblio.org/">
+<employees:name>Miller</employees:name>
+<employees:title>Dr. </employees:title>
+<employees:publications>
+<biblio:book>
+<biblio:title>A true story</biblio:title>
+<biblio:description>A real cool publication</biblio:description>
+</biblio:book>
+</employees:publications>
+</employees:record>
