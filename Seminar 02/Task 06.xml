@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE matches [
+<!ELEMENT matches (match+)>
+<!ELEMENT match (teams, final-score, goals, cards)>
+<!ELEMENT teams (team, team)>
+<!ELEMENT team (#PCDATA)>
+<!ELEMENT final-score (#PCDATA)>
+<!ELEMENT goals (goal+)>
+<!ELEMENT goal (player, time)>
+<!ELEMENT player (#PCDATA)>
+<!ELEMENT time (#PCDATA)>
+<!ELEMENT cards (card+)>
+<!ELEMENT card (player, type)>
+<!ATTLIST card type (yellow | red) #REQUIRED>
+]>
+<matches>
+    <match>
+        <teams>
+            <team>Roma</team>
+            <team>Lazio</team>
+        </teams>
+        <final-score>1-1</final-score>
+        <goals>
+            <goal>
+                <player>Klose</player>
+                <time>15</time>
+            </goal>
+            <goal>
+                <player>Tox</player>
+                <time>85</time>
+            </goal>
+        </goals>
+        <cards>
+            <card type="yellow">
+                <player>Tox</player>
+            </card>
+            <card type="yellow">
+                <player>Hernanes</player>
+            </card>
+            <card type="red">
+                <player>Kjaer</player>
+            </card>
+        </cards>
+    </match>
+</matches>
