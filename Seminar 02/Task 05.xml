@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE channel[
+	<!ELEMENT channel (item+,title,link,image*,language?,description)>
+	<!ATTLIST  channel version CDATA #REQUIRED>
+	<!ELEMENT item (title?,link?,description?)>
+	<!ELEMENT title (#PCDATA)>
+	<!ELEMENT link (#PCDATA)>
+	<!ELEMENT description (#PCDATA)>
+	<!ELEMENT image (title?|link?|url?)>
+	<!ELEMENT url (#PCDATA)>
+	<!ELEMENT language (#PCDATA)>	
+]>
+<channel version="1.0">
+    <item>
+        <title>First Item Title</title>
+        <link>http://example.com/first</link>
+        <description>This is the first item description.</description>
+    </item>
+    <item>
+        <link>http://example.com/second</link>
+        <title>Second Item Title</title>
+    </item>
+    <item>
+        <link>http://example.com/third</link>
+        <description>This is the third item description without title.</description>
+    </item>
+    <title>Channel Title</title>
+    <link>http://example.com/channel</link>
+    <image>
+        <url>http://example.com/image1.jpg</url>
+    </image>
+    <language>English</language>
+    <description>This is the channel description.</description>
+</channel>
+	
+	
+	
