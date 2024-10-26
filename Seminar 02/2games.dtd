@@ -1,0 +1,11 @@
+	<!ELEMENT games(game+)>
+	<!ELEMENT game(home-team,ex-team,scores,yellows?,reds?)>
+	<!ATTLIST game score CDATA #REQUIRED>
+	<!ELEMENT home-team (#PCDATA)>
+	<!ELEMENT ex-team (#PCDATA)>
+	<!ELEMENT scores(score+)>
+	<!ATTLIST  score me CDATA #REQUIRED>
+	<!ATTLIST score type CDATA #IMPLIED>
+	<!ELEMENT player (#PCDATA)>
+	<!ELEMENT yellows (player+)>
+	<!ELEMENT reds(player+)> 
