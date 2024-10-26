@@ -1,0 +1,24 @@
+<!DOCTYPE Course_Catalog [
+    <!-- Element definitions -->
+    <!ELEMENT Course_Catalog (Department+)>
+    <!ELEMENT Department (Title, Course+)>
+    <!ELEMENT Course (Title, Description?)>
+    <!ELEMENT Title (#PCDATA)>
+    <!ELEMENT Description (#PCDATA)>
+    <!ELEMENT Courseref EMPTY>
+
+    <!-- Attribute definitions -->
+    <!ATTLIST Course_Catalog Year CDATA #REQUIRED> <!-- Year is a required attribute -->
+    <!ATTLIST Department Code CDATA #REQUIRED> <!-- Code is a required attribute -->
+    <!ATTLIST Department Chair CDATA #IMPLIED> <!-- Chair is an implied attribute -->
+    <!ATTLIST Course Number ID #REQUIRED> <!-- Number is a required ID attribute -->
+    <!ATTLIST Course Prerequisites IDREFS #IMPLIED> <!-- Prerequisites is implied and can reference multiple IDs -->
+    <!ATTLIST Course Instructors IDREFS #REQUIRED> <!-- Instructors is required and references IDs -->
+    <!ATTLIST Course Enrollment CDATA #IMPLIED> <!-- Enrollment is an implied attribute -->
+    
+    <!ATTLIST Professor InstrID ID #REQUIRED> <!-- InstrID is a required ID attribute for Professors -->
+    <!ATTLIST Lecturer InstrID ID #REQUIRED> <!-- InstrID is a required ID attribute for Lecturers -->
+
+    <!-- Fixed attribute example -->
+    <!ATTLIST Courseref Number ID #FIXED "CS124"> <!-- Courseref has a fixed value for Number -->
+]>
