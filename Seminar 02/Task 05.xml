@@ -17,12 +17,14 @@
         <description>This is the first item description.</description>
     </item>
     <item>
-        <link>http://example.com/second</link>
-        <title>Second Item Title</title>
+        <title>First Item Title</title>
+        <link>http://example.com/first</link>
+        <description>This is the first item description.</description>
     </item>
     <item>
-        <link>http://example.com/third</link>
-        <description>This is the third item description without title.</description>
+	<title>First Item Title</title>
+        <link>http://example.com/first</link>
+        <description>This is the first item description.</description>
     </item>
     <title>Channel Title</title>
     <link>http://example.com/channel</link>
