@@ -2,7 +2,7 @@
 <!DOCTYPE channel[
 	<!ELEMENT channel (item+,title,link,image*,language?,description)>
 	<!ATTLIST  channel version CDATA #REQUIRED>
-	<!ELEMENT item (title?,link?,description?)>
+	<!ELEMENT item (title?,link?,description?)*>
 	<!ELEMENT title (#PCDATA)>
 	<!ELEMENT link (#PCDATA)>
 	<!ELEMENT description (#PCDATA)>
@@ -17,13 +17,13 @@
         <description>This is the first item description.</description>
     </item>
     <item>
-        <title>First Item Title</title>
         <link>http://example.com/first</link>
+	<title>First Item Title</title>
         <description>This is the first item description.</description>
     </item>
     <item>
+	<link>http://example.com/first</link>
 	<title>First Item Title</title>
-        <link>http://example.com/first</link>
         <description>This is the first item description.</description>
     </item>
     <title>Channel Title</title>
