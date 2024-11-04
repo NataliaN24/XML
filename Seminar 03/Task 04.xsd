@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="bank">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="accounts" type="AccountsType"/>
+                <xs:element name="customers" type="CustomersType"/>
+                <xs:element name="customer_accounts" type="CustomerAccountsType"/>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="AccountsType">
+        <xs:all>
+            <xs:element name="saving_accounts" type="SavingAccountsType"/>
+            <xs:element name="checking_accounts" type="CheckingAccountsType"/>
+        </xs:all>
+    </xs:complexType>
+
+    <xs:complexType name="SavingAccountsType">
+        <xs:sequence>
+            <xs:element name="saving_account" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="balance" type="BalanceType"/>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="xs:string" use="required"/>
+                    <xs:attribute name="interest" type="xs:decimal" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CheckingAccountsType">
+        <xs:sequence>
+            <xs:element name="checking_account" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="balance" type="BalanceType"/>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CustomersType">
+        <xs:sequence>
+            <xs:element name="customer" maxOccurs="unbounded" type="CustomerExtType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerExtType">
+        <xs:complexContent>
+            <xs:extension base="CustomerType">
+                <xs:sequence>
+                    <xs:element name="contacts">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="email" type="EmailType"/>
+                                <xs:element name="telephone" type="TelephoneType"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="postalCode" type="PostalCodeType"/> <!-- New postalCode element -->
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="address" type="xs:string"/>
+            <xs:element name="postalCode" type="PostalCodeType"/> <!-- Added postalCode to CustomerType -->
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CustomerAccountsType">
+        <xs:sequence>
+            <xs:element name="customer_account" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="c_id" type="xs:string" use="required"/>
+                    <xs:attribute name="ac_id" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="PostalCodeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d{4}"/> <!-- Four-digit postal code -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TelephoneType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+359-\d{2}-\d{3}-\d{2}-\d{2}"/> <!-- Format: +359-02-989-14-04 -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="EmailType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value=".+@.+\..+"/> <!-- Simple email pattern -->
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MinBalance">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="-5000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MaxBalance">
+        <xs:restriction base="xs:decimal">
+            <xs:maxInclusive value="1000000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="BalanceType">
+        <xs:union memberTypes="MinBalance MaxBalance"/>
+    </xs:simpleType>
+
+    <xs:annotation>
+        <xs:documentation>
+            This schema defines the structure of a bank's accounts, customers, and their relationships.
+        </xs:documentation>
+    </xs:annotation>
+
+</xs:schema>
