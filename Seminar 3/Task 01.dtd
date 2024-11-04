@@ -1,0 +1,20 @@
+<!ELEMENT collection (description,recipe*)>
+<!ELEMENT recipe (title,ingredient*,preparation,comment?,nutrition)>
+<!ELEMENT ingredient (preparation?)>
+<!ELEMENT preparation (step*)>
+
+<!ELEMENT step (#PCDATA)>
+<!ELEMENT title (#PCDATA)>
+<!ELEMENT comment (#PCDATA)>
+<!ELEMENT nutrition EMPTY>
+<!ELEMENT description ANY>
+
+
+<!ATTLIST nutrition protein CDATA #REQUIRED
+                    carbohydrates CDATA #REQUIRED
+                    fat CDATA #REQUIRED
+                    calories CDATA #REQUIRED
+                    alcohol CDATA #IMPLIED>
+<!ATTLIST ingredient name CDATA #REQUIRED
+                     amount CDATA #IMPLIED
+                     unit CDATA #IMPLIED>

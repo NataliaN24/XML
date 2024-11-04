@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+   <xs:element name="collection">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="description"/>
+            <xs:element ref="recipe" maxOccurs="unbounded" minOccurs="0"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+      
+   <xs:element name="description">
+      <xs:complexType mixed="true"/>
+   </xs:element>
+   
+   <xs:element name="recipe">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="title"/>
+            <xs:element ref="ingredient" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element ref="preparation"/>
+            <xs:element name="comment" type="xs:string" minOccurs="0"/>
+            <xs:element ref="nutrition"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="title" type="xs:string"/>
+   
+   <xs:element name="ingredient">
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="preparation" minOccurs="0"/>
+         </xs:sequence>
+         <xs:attribute name="name" type="xs:string" use="required"/>
+         <xs:attribute name="amount" type="xs:string" use="optional"/>
+         <xs:attribute name="unit" type="xs:string" use="optional"/>
+      </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="preparation">
+      <xs:complexType mixed="true"> <!-- Allow mixed content -->
+         <xs:sequence>
+            <xs:element name="step" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+         </xs:sequence>
+      </xs:complexType>
+   </xs:element>
+   
+   <xs:element name="nutrition">
+      <xs:complexType>
+         <xs:attribute name="protein" type="xs:string" use="required"/>
+         <xs:attribute name="carbohydrates" type="xs:string" use="required"/>
+         <xs:attribute name="fat" type="xs:string" use="required"/>
+         <xs:attribute name="calories" type="xs:string" use="required"/>
+         <xs:attribute name="alcohol" type="xs:string" use="optional"/>
+      </xs:complexType>
+   </xs:element>
+</xs:schema>
