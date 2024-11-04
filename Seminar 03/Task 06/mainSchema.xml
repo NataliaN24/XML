@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bankingSystem xmlns="http://www.example.com/main" 
+               xmlns:bank="http://www.example.com/bank"
+               xmlns:customer="http://www.example.com/customer">
+
+    <bank:accounts>
+        <bank:checking_account id="CA001">
+            <balance>1500</balance>
+        </bank:checking_account>
+    </bank:accounts>
+    
+    <customer:customer id="C001">
+        <name>Jane Doe</name>
+        <email>jane.doe@example.com</email>
+    </customer:customer>
+
+</bankingSystem>

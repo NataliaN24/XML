@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:bank="http://www.example.com/bank"
+           xmlns:customer="http://www.example.com/customer"
+           targetNamespace="http://www.example.com/main"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.example.com/bank" schemaLocation="bank.xsd"/>
+    <xs:import namespace="http://www.example.com/customer" schemaLocation="customer.xsd"/>
+
+    <xs:element name="bankingSystem">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="bank:accounts"/>
+                <xs:element ref="customer:customer"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:annotation>
+        <xs:documentation>
+            This schema integrates bank and customer schemas into a single banking system schema.
+        </xs:documentation>
+    </xs:annotation>
+
+</xs:schema>
