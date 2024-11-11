@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.example.com/bank" targetNamespace="http://www.example.com/bank" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:redefine schemaLocation="bank.xsd">
-        <xs:complexType name="image">
-            <xs:simpleContent>
-                <xs:extension base="xs:base64Binary">
-                    <xs:attribute name="src" type="xs:string" use="required"/>
-                    <xs:attribute name="type" type="xs:notation" use="required"/> <!-- New attribute of type notation -->
-                </xs:extension>
-            </xs:simpleContent>
-        </xs:complexType>
-        
-        <xs:complexType name="customerExt">
-            <xs:complexContent>
-                <xs:extension base="tns:customer">
-                    <xs:sequence>
-                        <xs:element ref="contacts" minOccurs="1"/>
-                        <xs:element name="image" type="image"/> <!-- Updated image reference -->
-                    </xs:sequence>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:redefine>
+  <!-- Рефиниране на съществуваща схема -->
+  <xs:redefine schemaLocation="bank.xsd">
 
-    <xs:notation id="jpeg" name="image/jpeg" public="image/jpeg" system="http://www.w3.org/1999/jpeg"/> <!-- Defined notation for JPEG -->
-    <xs:notation id="png" name="image/png" public="image/png" system="http://www.w3.org/1999/png"/> <!-- Defined notation for PNG -->
-    
-    <xs:annotation>
-        <xs:documentation>
-            This schema extends the previous bank schema by adding a notation attribute to the image element.
-        </xs:documentation>
-    </xs:annotation>
+    <!-- Промяна на minBalance с ново минимално ограничение -->
+    <xs:simpleType name="minBalance">
+      <xs:restriction base="minBalance">
+        <xs:minInclusive value="-5200"/> <!-- Минимално ограничение за баланса -->
+      </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Разширяване на тип customerExt -->
+    <xs:complexType name="customerExt">
+      <xs:complexContent>
+        <xs:extension base="customerExt">
+          <xs:sequence>
+            <!-- Добавяне на елемент image от тип image -->
+            <xs:element name="image" type="image"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:redefine>
+
+  <!-- Дефиниране на нотации за gif и jpeg -->
+  <xs:notation name="gif" public="image/gif" system="view.exe"/>
+  <xs:notation name="jpeg" public="image/jpeg" system="view.exe"/>
+
+  <!-- Дефиниране на комплексен тип image с добавен атрибут type от тип нотация -->
+  <xs:complexType name="image">
+    <xs:simpleContent>
+      <xs:extension base="xs:base64Binary">
+        <!-- Атрибут src от тип string -->
+        <xs:attribute name="src" type="xs:string" use="required"/>
+        <!-- Атрибут type от тип нотация -->
+        <xs:attribute name="type" use="required">
+          <xs:simpleType>
+            <xs:restriction base="xs:NOTATION">
+              <!-- Допустими стойности за type са gif и jpeg -->
+              <xs:enumeration value="gif"/>
+              <xs:enumeration value="jpeg"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
 
 </xs:schema>
