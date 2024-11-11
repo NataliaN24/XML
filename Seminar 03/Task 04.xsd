@@ -1,132 +1,178 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  
+  <!-- Документация за схемата -->
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      This document defines an example of XML Schema.
+    </xs:documentation>
+  </xs:annotation>
 
-    <xs:element name="bank">
-        <xs:complexType>
-            <xs:all>
-                <xs:element name="accounts" type="AccountsType"/>
-                <xs:element name="customers" type="CustomersType"/>
-                <xs:element name="customer_accounts" type="CustomerAccountsType"/>
-            </xs:all>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="AccountsType">
-        <xs:all>
-            <xs:element name="saving_accounts" type="SavingAccountsType"/>
-            <xs:element name="checking_accounts" type="CheckingAccountsType"/>
-        </xs:all>
-    </xs:complexType>
-
-    <xs:complexType name="SavingAccountsType">
-        <xs:sequence>
-            <xs:element name="saving_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="balance" type="BalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                    <xs:attribute name="interest" type="xs:decimal" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CheckingAccountsType">
-        <xs:sequence>
-            <xs:element name="checking_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="balance" type="BalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomersType">
-        <xs:sequence>
-            <xs:element name="customer" maxOccurs="unbounded" type="CustomerExtType"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerExtType">
-        <xs:complexContent>
-            <xs:extension base="CustomerType">
-                <xs:sequence>
-                    <xs:element name="contacts">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="email" type="EmailType"/>
-                                <xs:element name="telephone" type="TelephoneType"/>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="postalCode" type="PostalCodeType"/> <!-- New postalCode element -->
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerType">
-        <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-            <xs:element name="postalCode" type="PostalCodeType"/> <!-- Added postalCode to CustomerType -->
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:string" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerAccountsType">
-        <xs:sequence>
-            <xs:element name="customer_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:attribute name="c_id" type="xs:string" use="required"/>
-                    <xs:attribute name="ac_id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:simpleType name="PostalCodeType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="\d{4}"/> <!-- Four-digit postal code -->
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="TelephoneType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="\+359-\d{2}-\d{3}-\d{2}-\d{2}"/> <!-- Format: +359-02-989-14-04 -->
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="EmailType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value=".+@.+\..+"/> <!-- Simple email pattern -->
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="MinBalance">
-        <xs:restriction base="xs:decimal">
-            <xs:minInclusive value="-5000"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="MaxBalance">
-        <xs:restriction base="xs:decimal">
-            <xs:maxInclusive value="1000000"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="BalanceType">
-        <xs:union memberTypes="MinBalance MaxBalance"/>
-    </xs:simpleType>
-
+  <!-- Елемент root за банката -->
+  <xs:element name="bank">
     <xs:annotation>
-        <xs:documentation>
-            This schema defines the structure of a bank's accounts, customers, and their relationships.
-        </xs:documentation>
+      <xs:documentation xml:lang="en">
+        This element is the root.
+      </xs:documentation>
     </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="accounts" minOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element ref="saving_accounts"/>
+              <xs:element ref="checking_accounts"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="customers" minOccurs="1"/>
+        <xs:element ref="customer_accounts" minOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
 
+  <!-- Елемент name и address -->
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="address" type="address"/>
+  
+  <xs:simpleType name="address">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Елемент balance -->
+  <xs:element name="balance" type="balance"/>
+  
+  <xs:simpleType name="balance">
+    <xs:union memberTypes="minBalance maxBalance"/>
+  </xs:simpleType>
+
+  <xs:simpleType name="maxBalance">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxInclusive value="1000000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="minBalance">
+    <xs:restriction base="xs:negativeInteger">
+      <xs:minInclusive value="-5500"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Дефиниция на комплексен тип customer, добавен е елемент postalCode -->
+  <xs:complexType name="customer">
+    <xs:sequence>
+      <xs:element ref="name"/>
+      <xs:element ref="address"/>
+      <xs:element ref="postalCode"/> <!-- Добавен елемент postalCode -->
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+
+  <!-- Елемент customer от тип customer -->
+  <xs:element name="customer" type="customer"/>
+
+  <!-- Дефиниция на customerExt, разширяване на customer с контакти -->
+  <xs:complexType name="customerExt">
+    <xs:complexContent>
+      <xs:extension base="customer">
+        <xs:sequence>
+          <xs:element ref="contacts" minOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Елемент customerExt от тип customerExt -->
+  <xs:element name="customerExt" type="customerExt"/>
+
+  <!-- Дефиниция на contacts с елементи email и telephone -->
+  <xs:complexType name="contacts">
+    <xs:sequence>
+      <xs:element ref="email"/>
+      <xs:element ref="telephone"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Елементи email, telephone и postalCode с регулярни изрази -->
+  <xs:element name="contacts" type="contacts"/>
+  <xs:element name="email" type="email"/>
+  <xs:element name="postalCode" type="postalCode"/> <!-- Добавен елемент postalCode -->
+  <xs:element name="telephone" type="telephone"/>
+
+     <!-- Останалите дефиниции, както в оригиналния XML Schema -->
+  <xs:complexType name="customers">
+    <xs:sequence>
+      <xs:element ref="customerExt" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:element name="customers" type="customers"/>
+
+  <xs:element name="saving_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="required"/>
+      <xs:attribute name="interest" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="checking_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="customer_account">
+    <xs:complexType>
+      <xs:attribute name="c_id" type="xs:IDREF" use="required"/>
+      <xs:attribute name="ac_id" type="xs:IDREF" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="saving_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="saving_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="checking_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="checking_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="customer_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="customer_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
+
+  <xs:simpleType name="postalCode">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{4}"/> <!-- Регулярен израз за пощенски код -->
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="email">
+    <xs:restriction base="xs:token">
+      <xs:pattern value="[_\-a-zA-Z0-9\.\+]+@[a-zA-Z0-9](\.?[\-a-zA-Z0-9]*[a-zA-Z0-9])*"/> <!-- Регулярен израз за електронна поща -->
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="telephone">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\+[0-9]{2,3}-[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/> <!-- Регулярен израз за телефонен номер -->
+    </xs:restriction>
+  </xs:simpleType>
