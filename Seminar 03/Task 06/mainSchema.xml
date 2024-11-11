@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bankingSystem xmlns="http://www.example.com/main" 
-               xmlns:bank="http://www.example.com/bank"
-               xmlns:customer="http://www.example.com/customer">
-
-    <bank:accounts>
-        <bank:checking_account id="CA001">
-            <balance>1500</balance>
-        </bank:checking_account>
-    </bank:accounts>
-    
-    <customer:customer id="C001">
-        <name>Jane Doe</name>
-        <email>jane.doe@example.com</email>
-    </customer:customer>
-
-</bankingSystem>
+<!-- Root element for the instance document -->
+<envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="Task6_4.xsd">
+  
+  <!-- Order element with namespaces for order and product -->
+  <order xmlns="http://example.org/ord" xmlns:prod="http://example.org/prod">
+    <number>123ABBCC123</number>
+    <items>
+      <product xmlns="http://example.org/prod">
+        <!-- Product number with attribute in the product namespace -->
+        <number prod:id="prod557">557</number>
+        <!-- Product name without namespace -->
+        <name xmlns="">Short-Sleeved Linen Blouse</name>
+        <!-- Product size in the product namespace with attribute -->
+        <prod:size system="US-DRESS">10</prod:size>
+        <!-- Product color in a different namespace -->
+        <prod:color xmlns:prod="http://example.org/prod2" prod:value="blue"/>
+      </product>
+    </items>
+  </order>
+</envelope>
