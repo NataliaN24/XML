@@ -1,79 +1,115 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-
-    <xs:element name="bank">
-        <xs:complexType>
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <!-- Дефиниция на основния елемент bank -->
+  <xs:element name="bank">
+    <xs:complexType>
+      <!-- Използване на xs:all, за да се позволи всеки ред на срещане на под-елементите -->
+      <xs:all>
+        <!-- Дефиниция на локален комплексен тип за accounts -->
+        <xs:element name="accounts" minOccurs="1">
+          <xs:complexType>
             <xs:all>
-                <xs:element name="accounts" type="AccountsType"/>
-                <xs:element name="customers" type="CustomersType"/>
-                <xs:element name="customer_accounts" type="CustomerAccountsType"/>
+              <xs:element ref="saving_accounts"/>
+              <xs:element ref="checking_accounts"/>
             </xs:all>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="AccountsType">
-        <xs:all>
-            <xs:element name="saving_accounts" type="SavingAccountsType"/>
-            <xs:element name="checking_accounts" type="CheckingAccountsType"/>
-        </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <!-- Референции към глобалните елементи customers и customer_accounts -->
+        <xs:element ref="customers" minOccurs="1"/>
+        <xs:element ref="customer_accounts" minOccurs="1"/>
+      </xs:all>
     </xs:complexType>
+  </xs:element>
 
-    <xs:complexType name="SavingAccountsType">
-        <xs:sequence>
-            <xs:element name="saving_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="balance" type="PositiveBalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                    <xs:attribute name="interest" type="xs:decimal" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CheckingAccountsType">
-        <xs:sequence>
-            <xs:element name="checking_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="balance" type="PositiveBalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomersType">
-        <xs:sequence>
-            <xs:element name="customer" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="name" type="xs:string"/>
-                        <xs:element name="address" type="xs:string"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerAccountsType">
-        <xs:sequence>
-            <xs:element name="customer_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:attribute name="c_id" type="xs:string" use="required"/>
-                    <xs:attribute name="ac_id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:simpleType name="PositiveBalanceType">
-        <xs:restriction base="xs:decimal">
-            <xs:minInclusive value="-5000"/>
-        </xs:restriction>
+  <!-- Дефиниция на елемента name като стринг -->
+  <xs:element name="name" type="xs:string"/>
+  
+  <!-- Дефиниция на елемента address като стринг -->
+  <xs:element name="address" type="xs:string"/>
+  
+  <!-- Дефиниция на елемента balance с рестрикция за минимум -5000 -->
+  <xs:element name="balance">
+    <xs:simpleType>
+      <xs:restriction base="xs:integer">
+        <xs:minInclusive value="-5000"/>
+      </xs:restriction>
     </xs:simpleType>
+  </xs:element>
+  
+  <!-- Дефиниция на елемента customer с уникален идентификатор -->
+  <xs:element name="customer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="name"/>
+        <xs:element ref="address"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
 
+  <!-- Дефиниране на глобален комплексен тип customers -->
+  <xs:complexType name="customers">
+    <xs:sequence>
+      <xs:element ref="customer" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <!-- Дефиниране на глобалния елемент customers -->
+  <xs:element name="customers" type="customers"/>
+
+  <!-- Дефиниция на глобален комплексен тип saving_account с уникален идентификатор -->
+  <xs:element name="saving_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:ID"/>
+      <xs:attribute name="interest" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Дефиниция на елемента checking_account с уникален идентификатор -->
+  <xs:element name="checking_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:ID"/>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Дефиниция на елемента customer_account с референции към съществуващите идентификатори -->
+  <xs:element name="customer_account">
+    <xs:complexType>
+      <xs:attribute name="c_id" use="required" type="xs:IDREF"/>
+      <xs:attribute name="ac_id" use="required" type="xs:IDREF"/>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Дефиниция на локален комплексен тип saving_accounts -->
+  <xs:element name="saving_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="saving_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Дефиниция на локален комплексен тип checking_accounts -->
+  <xs:element name="checking_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="checking_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <!-- Дефиниция на елемента customer_accounts като последователност от customer_account -->
+  <xs:element name="customer_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="customer_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
