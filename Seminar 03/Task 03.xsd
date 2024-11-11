@@ -1,120 +1,184 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">
+      This document defines an example of XML Schema.
+    </xs:documentation>
+  </xs:annotation>
 
-    <xs:element name="bank">
-        <xs:complexType>
-            <xs:all>
-                <xs:element name="accounts" type="AccountsType"/>
-                <xs:element name="customers" type="CustomersType"/>
-                <xs:element name="customer_accounts" type="CustomerAccountsType"/>
-            </xs:all>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:complexType name="AccountsType">
-        <xs:all>
-            <xs:element name="saving_accounts" type="SavingAccountsType"/>
-            <xs:element name="checking_accounts" type="CheckingAccountsType"/>
-        </xs:all>
-    </xs:complexType>
-
-    <xs:complexType name="SavingAccountsType">
-        <xs:sequence>
-            <xs:element name="saving_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <!-- Balance defined as a union of two simple types -->
-                        <xs:element name="balance" type="BalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                    <xs:attribute name="interest" type="xs:decimal" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CheckingAccountsType">
-        <xs:sequence>
-            <xs:element name="checking_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <!-- Balance defined as a union of two simple types -->
-                        <xs:element name="balance" type="BalanceType"/>
-                    </xs:sequence>
-                    <xs:attribute name="id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="CustomersType">
-        <xs:sequence>
-            <!-- Updated to use CustomerExtType for customers -->
-            <xs:element name="customer" maxOccurs="unbounded" type="CustomerExtType"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <!-- New complex type definition for customers with additional contact details -->
-    <xs:complexType name="CustomerExtType">
-        <xs:complexContent>
-            <xs:extension base="CustomerType">
-                <xs:sequence>
-                    <xs:element name="contacts">
-                        <xs:complexType>
-                            <xs:sequence>
-                                <!-- New elements for email and telephone -->
-                                <xs:element name="email" type="xs:string"/>
-                                <xs:element name="telephone" type="xs:string"/>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerType">
-        <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="address" type="xs:string"/>
-        </xs:sequence>
-        <xs:attribute name="id" type="xs:string" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="CustomerAccountsType">
-        <xs:sequence>
-            <xs:element name="customer_account" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:attribute name="c_id" type="xs:string" use="required"/>
-                    <xs:attribute name="ac_id" type="xs:string" use="required"/>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-
-    <!-- Simple type defining the minimum balance restriction -->
-    <xs:simpleType name="MinBalance">
-        <xs:restriction base="xs:decimal">
-            <xs:minInclusive value="-5000"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <!-- Simple type defining the maximum balance restriction -->
-    <xs:simpleType name="MaxBalance">
-        <xs:restriction base="xs:decimal">
-            <xs:maxInclusive value="1000000"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <!-- Union type for balance, combining MinBalance and MaxBalance -->
-    <xs:simpleType name="BalanceType">
-        <xs:union memberTypes="MinBalance MaxBalance"/>
-    </xs:simpleType>
-
+  <!-- Дефиниция на главния елемент bank -->
+  <xs:element name="bank">
     <xs:annotation>
-        <xs:documentation>
-            This schema defines the structure of a bank's accounts, customers, and their relationships.
-        </xs:documentation>
+      <xs:documentation xml:lang="en">
+        This element is the root.
+      </xs:documentation>
     </xs:annotation>
+    <xs:complexType>
+      <xs:all>
+        <xs:element name="accounts" minOccurs="1">
+          <xs:complexType>
+            <xs:all>
+              <xs:element ref="saving_accounts"/>
+              <xs:element ref="checking_accounts"/>
+            </xs:all>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="customers" minOccurs="1"/>
+        <xs:element ref="customer_accounts" minOccurs="1"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
 
+  <xs:element name="name" type="xs:string"/>
+
+  <!-- Промяна на типа на адреса към комплексен тип с рестрикция -->
+  <xs:element name="address" type="address"/>
+  <xs:simpleType name="address">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <!-- Промяна на дефиницията на balance към обединение на два прости типа -->
+  <xs:element name="balance" type="balance"/>
+  <xs:simpleType name="balance">
+    <xs:union memberTypes="minBalance maxBalance"/>
+  </xs:simpleType>
+  
+  <!-- Дефиниция на нови прости типове minBalance и maxBalance -->
+  <xs:simpleType name="maxBalance">
+    <xs:restriction base="xs:positiveInteger">
+      <xs:maxInclusive value="1000000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
+  <xs:simpleType name="minBalance">
+    <xs:restriction base="xs:negativeInteger">
+      <xs:minInclusive value="-5500"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Дефиниция на комплексния тип customer -->
+  <xs:complexType name="customer">
+    <xs:sequence>
+      <xs:element ref="name"/>
+      <xs:element ref="address"/>
+    </xs:sequence>
+    <xs:attribute name="id" type="xs:ID" use="required"/>
+  </xs:complexType>
+  <xs:element name="customer" type="customer"/>
+
+  <!-- Дефиниция на новия тип customerExt с добавяне на contacts -->
+  <xs:complexType name="customerExt">
+    <xs:complexContent>
+      <xs:extension base="customer">
+        <xs:sequence>
+          <xs:element ref="contacts" minOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="customerExt" type="customerExt"/>
+
+  <!-- Дефиниция на типа contacts, състоящ се от email и telephone -->
+  <xs:complexType name="contacts">
+    <xs:sequence>
+      <xs:element ref="email"/>
+      <xs:element ref="telephone"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="contacts" type="contacts"/>
+
+  <xs:element name="email" type="xs:string"/>
+  <xs:element name="telephone" type="xs:string"/>
+
+  <xs:complexType name="customers">
+    <xs:sequence>
+      <xs:element ref="customerExt" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="customers" type="customers"/>
+
+  <xs:element name="saving_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="required"/>
+      <xs:attribute name="interest" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="checking_account">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="balance"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:ID" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="customer_account">
+    <xs:complexType>
+      <xs:attribute name="c_id" type="xs:IDREF" use="required"/>
+      <xs:attribute name="ac_id" type="xs:IDREF" use="required"/>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="saving_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="saving_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="checking_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="checking_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="customer_accounts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="customer_account" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+-----------------------------------------------------------
+bankExt.xsd
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Redefining elements from bank.xsd -->
+  <xs:redefine schemaLocation="bank.xsd">
+    <!-- Промяна на minBalance типа за нова долна граница -->
+    <xs:simpleType name="minBalance">
+      <xs:restriction base="minBalance">
+        <xs:minInclusive value="-5200"/>
+      </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Разширяване на типа customerExt с нов елемент image -->
+    <xs:complexType name="customerExt">
+      <xs:complexContent>
+        <xs:extension base="customerExt">
+          <xs:sequence>
+            <xs:element name="image" type="image"/>
+          </xs:sequence>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:redefine>
+
+  <!-- Дефиниция на новия тип image с атрибут src -->
+  <xs:complexType name="image">
+    <xs:simpleContent>
+      <xs:extension base="xs:base64Binary">
+        <xs:attribute name="src" type="xs:string" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
 </xs:schema>
