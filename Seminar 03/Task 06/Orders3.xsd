@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://example.org/ord"
+            xmlns:ord="http://example.org/ord"
+            xmlns:prod="http://example.org/prod"
+            elementFormDefault="qualified">
+  
+  <!-- Importing schema for products -->
+  <xsd:import namespace="http://example.org/prod" schemaLocation="Task6_2.xsd"/>
+  
+  <!-- Defining the order element -->
+  <xsd:element name="order" type="ord:OrderType"/>
+  
+  <!-- Complex type for order -->
+  <xsd:complexType name="OrderType">
+    <xsd:sequence>
+      <xsd:element name="number" type="xsd:string"/>
+      <xsd:element name="items" type="ord:ItemsType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <!-- Complex type for items with reference to product -->
+  <xsd:complexType name="ItemsType">
+    <xsd:sequence>
+      <xsd:element ref="prod:product" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
