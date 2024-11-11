@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ord="http://example.org/ord">
+  
+  <!-- Importing schema for orders -->
+  <xsd:import namespace="http://example.org/ord" schemaLocation="Task6_3.xsd"/>
+  
+  <!-- Defining the envelope element -->
+  <xsd:element name="envelope" type="EnvelopeType"/>
+  
+  <!-- Complex type for envelope -->
+  <xsd:complexType name="EnvelopeType">
+    <xsd:sequence>
+      <xsd:element ref="ord:order" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
