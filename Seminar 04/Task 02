@@ -1,0 +1,15 @@
+catalog/cd[@id='8c0a600b']/tracklist/track[@length='4:04']
+catalog/cd/tracklist/track[position() mod 2 = 0]
+catalog/cd/tracklist/track[position() mod 2 = 1]
+catalog/cd/tracklist/track[string-length(.)>35]
+catalog/cd/tracklist/track[string-length(.) > 15]/string-length(.)
+catalog/cd/tracklist/track[last()]
+catalog/cd/tracklist/track[5]
+catalog/cd/tracklist/count(track)
+catalog/cd/tracklist/track[contains(text(),'Ya soshla s uma')]
+catalog/cd/tracklist/track[starts-with(text(),'D')]
+catalog/cd/tracklist/track[ends-with(text(),'sta')]
+catalog/cd/tracklist/track/upper-case(text())
+catalog/cd[tracklist/track[@length='3:55' and text()='Robot (Robotronik)']]/year
+sum(catalog/cd/tracklist/count(track)) div catalog/count(cd)
+catalog/cd/concat('Заглавие:',title/text(),';Година на издаване:',year)

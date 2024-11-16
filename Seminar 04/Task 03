@@ -1,0 +1,19 @@
+catalog/cd/child::tracklist/attribute::num
+catalog/cd/child::year
+
+catalog/cd/child::tracklist/attribute::num
+catalog/cd/attribute::id
+
+catalog/cd/tracklist/track[text()='Doschitay do sta (Countdown)']/preceding-sibling::*
+
+catalog/cd/tracklist/track[text()='Doschitay do sta (Countdown)']/following-sibling::*
+
+catalog/cd/tracklist/track[text()='Doschitay do sta (Countdown)']/followingsibling::track[@length='4:04']
+
+//cd/descendant::*
+
+//attribute::id
+
+//attribute::*
+
+max(//*/@num)
