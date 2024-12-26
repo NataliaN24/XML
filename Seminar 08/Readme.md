@@ -1,0 +1,1 @@
+https://learn.fmi.uni-sofia.bg/pluginfile.php/529970/mod_resource/content/1/Resource%20Description%20Framework%20%28RDF%29%2C%20RDF%20Schema%20%28RDFS%29%20%D0%B8%20OWL%20%28Ontology%20Web%20Language%29.pdf
